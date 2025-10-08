@@ -1,4 +1,3 @@
-# .github/workflows/generate-doc.yml
 name: Generate iFlow Documentation
 
 on:
@@ -8,6 +7,7 @@ on:
 jobs:
   generate_doc:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -17,8 +17,15 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Dependencies
-        run: pip install -r requirements.txt
+      - name: Install System Dependencies for Graphviz
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz graphviz-dev
 
-      - name: Run Script
+      - name: Install Python Dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pygraphviz networkx matplotlib python-docx
+
+      - name: Run iFlow Documentation Script
         run: python Dynamic_generate_iflow_spec_using_ai.py
