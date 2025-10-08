@@ -25,7 +25,7 @@ jobs:
         run: |
           mkdir iflows
           cd iflows
-          curl -L -O https://raw.githubusercontent.com/Vanam-Srija/Sample1/tree/main/.github/iflows/EDI_850_TO_IDOC_1809_ORDERS.iflw
+          curl -L -O https://raw.githubusercontent.com/Vanam-Srija/Sample1/main/iflows/EDI_850_TO_IDOC_1809_ORDERS.iflw
           cd ..
 
       - name: Run documentation generator
