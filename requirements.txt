@@ -1,4 +1,5 @@
-requests
-python-docx
-matplotlib
 networkx
+matplotlib
+python-docx
+pygraphviz
+requests
