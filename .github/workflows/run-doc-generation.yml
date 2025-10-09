@@ -34,3 +34,16 @@ jobs:
         with:
           name: iFlow-Documentation
           path: output_docs/**/*.docx
+      - name: Commit and push generated document
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Add only new or updated docs
+          git add output_docs/*.docx || echo "No .docx files found"
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-generated iFlow documentation"
+            git push
+          fi  
