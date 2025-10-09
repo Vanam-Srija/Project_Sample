@@ -33,7 +33,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: iFlow-Documentation
-          path: |
-            *.docx
-            docs/**/*.docx
-            output/**/*.docx
+          path: output_docs/**/*.docx
