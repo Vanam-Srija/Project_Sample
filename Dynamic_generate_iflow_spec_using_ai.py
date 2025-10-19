@@ -459,6 +459,7 @@ def get_all_groovy_scripts(folder_path):
 
 # --- Main Document Generation ---
 def generate_iflow_spec():
+    global DOCX_PATH
     import urllib3
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -957,22 +958,17 @@ def generate_iflow_spec():
     else:
         add_paragraph(doc, "No additional appendix info found in XML.")
 
-# Create an output directory (so GitHub Actions can easily find the file)
-    output_dir = "output_docs"
-    os.makedirs(output_dir, exist_ok=True)
-
-    # Ensure file has a proper .docx name
+    # Create an output directory (so GitHub Actions can easily find the file)
+    # Ensure file has a proper .docx extension
     if not DOCX_PATH.lower().endswith(".docx"):
         DOCX_PATH = f"{DOCX_PATH}.docx"
 
-    # Build full file path inside output_docs/
-    output_path = os.path.join(output_dir, os.path.basename(DOCX_PATH))
+    # Save directly in the current folder (same repo)
+    doc.save(DOCX_PATH)
 
-    # Save the document
-    doc.save(output_path)
+    # Print absolute path for debugging
+    print(f"✅ Document generated and saved at: {os.path.abspath(DOCX_PATH)}")
 
-# Print absolute path for debugging
-    print(f"✅ Document generated and saved at: {os.path.abspath(output_path)}")
 
 if __name__ == "__main__":
     generate_iflow_spec()
