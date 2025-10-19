@@ -41,25 +41,21 @@ jobs:
       - name: 🧠 Generate iFlow Technical Document
         run: python Dynamic_generate_iflow_spec_using_ai.py
 
-      # 5️⃣ Commit and push generated .docx back to repo
-      - name: 🪶 Commit and push generated document
-        env:
-          GITHUB_TOKEN: ${{ secrets.PYTHON_REPO_TOKEN }}
+
+      # 5. Configure Git
+      - name: Configure Git
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
 
-          # Check if any .docx files exist
-          if ls *.docx 1> /dev/null 2>&1; then
-            git add *.docx
-
-            # Commit only if there are changes
-            if ! git diff --cached --quiet; then
-              git commit -m "📄 Auto-generated iFlow Technical Documentation"
-              git push https://x-access-token:${PYTHON_REPO_TOKEN}@github.com/${{ github.repository }} HEAD:${{ github.ref }}
-            else
-              echo "No changes detected — skipping commit."
-            fi
+      # 6. Commit and push the generated doc
+      - name: Commit and Push Generated Doc
+        run: |
+          DOC_FILE="output.docx"  # make sure your Python script saves here
+          if [ -f "$DOC_FILE" ]; then
+            git add "$DOC_FILE"
+            git commit -m "Add/Update generated iFlow documentation" || echo "No changes to commit"
+            git push
           else
-            echo "No .docx files generated — skipping commit."
+            echo "No doc file found to push."
           fi
