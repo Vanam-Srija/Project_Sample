@@ -3,3 +3,5 @@ matplotlib
 python-docx
 pygraphviz
 requests
+urllib3
+openai
