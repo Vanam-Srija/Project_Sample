@@ -1,29 +1,25 @@
 name: Generate iFlow Documentation
 
 on:
-  # Trigger manually or via repository_dispatch
   workflow_dispatch:
   repository_dispatch:
-    types: [generate-iflow-doc]
+    types: [generate-iflow-docs]
 
 jobs:
   generate_doc:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout repository
       - name: 🧩 Checkout repository
         uses: actions/checkout@v4
         with:
-          persist-credentials: false  # We'll use explicit token for push
+          persist-credentials: false
 
-      # 2️⃣ Set up Python
       - name: 🐍 Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      # 3️⃣ Install dependencies
       - name: 📦 Install dependencies
         run: |
           sudo apt-get update
@@ -32,31 +28,29 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install urllib3 openai requests pygraphviz python-docx || true
 
-      # 4️⃣ Generate unique filename with timestamp
-      - name: 🕒 Set unique filename
-        id: filename
-        run: echo "DOC_FILE=iFlow_Documentation_$(date +'%Y-%m-%d_%H-%M-%S').docx" >> $GITHUB_ENV
+      # Create consistent output folder
+      - name: 🕒 Prepare output path
+        id: prep
+        run: |
+          mkdir -p sample_doc
+          echo "DOC_FILE=sample_doc/iFlow_Documentation_$(date +'%Y-%m-%d_%H-%M-%S').docx" >> $GITHUB_ENV
 
-      # 5️⃣ Run the document generation script
       - name: 🧠 Generate iFlow Technical Document
         run: python Dynamic_generate_iflow_spec_using_ai.py "$DOC_FILE"
 
-      # 6️⃣ List all generated files (for debugging)
-      - name: 📁 List generated files
-        run: ls -l *.docx || echo "No DOCX files found"
+      - name: 📁 Verify generated files
+        run: ls -l sample_doc/*.docx || echo "⚠️ No DOCX file found"
 
-      # 7️⃣ Configure Git
       - name: ⚙️ Configure Git
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
 
-      # 8️⃣ Commit and Push all generated documents
       - name: 🚀 Commit and Push Generated Docs
         env:
           GITHUB_TOKEN: ${{ secrets.PYTHON_REPO_TOKEN }}
         run: |
-          if ls ./*.docx 1> /dev/null 2>&1; then
+          if ls sample_doc/*.docx 1> /dev/null 2>&1; then
             echo "📝 Found DOCX files to commit..."
             git add output_docs/*.docx
 
@@ -65,7 +59,7 @@ jobs:
             else
               git commit -m "Auto-generated iFlow documentation - $(date +'%Y-%m-%d %H:%M:%S')"
               git push https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:main
-              echo "✅ Successfully pushed all new documents."
+              echo "✅ Successfully pushed new documents to sample_doc/."
             fi
           else
             echo "⚠️ No DOCX files found to push."
