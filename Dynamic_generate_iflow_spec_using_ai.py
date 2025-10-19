@@ -19,7 +19,6 @@ with open("config_file.json", "r") as f:
 GEMINI_API_URL = config["gemini_api_url"]
 GEMINI_API_KEY = config["gemini_api_key"]
 XML_PATH = config["source_xml_path"]
-DOCX_PATH = config["target_docx_path"]
 GROOVY_SCRIPTS_FOLDER = config.get("groovy_scripts_folder", None)
 
 iflow_name = os.path.splitext(os.path.basename(XML_PATH))[0]
@@ -960,15 +959,10 @@ def generate_iflow_spec():
 
     # Create an output directory (so GitHub Actions can easily find the file)
     # Ensure file has a proper .docx extension
-    if not DOCX_PATH.lower().endswith(".docx"):
-        DOCX_PATH = f"{DOCX_PATH}.docx"
-
-    # Save directly in the current folder (same repo)
+   # Python script
+    DOCX_PATH = "output.docx"
     doc.save(DOCX_PATH)
-
-    # Print absolute path for debugging
-    print(f"✅ Document generated and saved at: {os.path.abspath(DOCX_PATH)}")
-
+    print(f"Downloaded file saved locally as: {DOCX_PATH}")
 
 if __name__ == "__main__":
     generate_iflow_spec()
