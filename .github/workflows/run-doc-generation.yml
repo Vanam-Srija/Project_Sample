@@ -3,7 +3,7 @@ name: Generate iFlow Documentation
 on:
   workflow_dispatch:
   repository_dispatch:
-    types: [generate-iflow-docs]
+    types: [generate-iflow-doc]
 
 jobs:
   generate_doc:
