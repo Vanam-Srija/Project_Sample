@@ -49,12 +49,17 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Add any .docx file generated in repo root
-          git add *.docx || true
+          # Check if any .docx files exist
+          if ls *.docx 1> /dev/null 2>&1; then
+            git add *.docx
 
-          # Commit only if there are changes
-          if ! git diff --cached --quiet; then
-            git commit -m "📄 Auto-generated iFlow Technical Documentation"
-            git push https://x-access-token:${PYTHON_REPO_TOKEN}@github.com/${{ github.repository }} HEAD:${{ github.ref }}
+            # Commit only if there are changes
+            if ! git diff --cached --quiet; then
+              git commit -m "📄 Auto-generated iFlow Technical Documentation"
+              git push https://x-access-token:${PYTHON_REPO_TOKEN}@github.com/${{ github.repository }} HEAD:${{ github.ref }}
+            else
+              echo "No changes detected — skipping commit."
+            fi
           else
-            echo "No changes detected — skipping commit."
+            echo "No .docx files generated — skipping commit."
+          fi
