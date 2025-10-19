@@ -26,10 +26,16 @@ jobs:
       # 3️⃣ Install dependencies
       - name: 📦 Install dependencies
         run: |
+          # Install system packages required by pygraphviz
+          sudo apt-get update
+          sudo apt-get install -y graphviz graphviz-dev pkg-config
+
+          # Upgrade pip
           python -m pip install --upgrade pip
+
+          # Install Python dependencies
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          # fallback: install common dependencies if requirements.txt is missing
-          pip install urllib3 openai requests || true
+          pip install urllib3 openai requests pygraphviz || true
 
       # 4️⃣ Run the document generation script
       - name: 🧠 Generate iFlow Technical Document
