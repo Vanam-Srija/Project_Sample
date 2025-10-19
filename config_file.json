@@ -1,7 +1,13 @@
 {
-    "gemini_api_url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
-    "gemini_api_key": "AIzaSyBpfa_R8VvHMisqsbuo6NoKnNc5-OXn63s",
-    "source_xml_path": "https://raw.githubusercontent.com/Vanam-Srija/CPI_Project/main/iflows/EDI_850_TO_IDOC_1809_ORDERS.iflw",
-    "target_docx_path": "output_doc.docx",
-    "groovy_scripts_folder":"C:\\Users\\280407\\Downloads\\EDI_850_SRI\\groovy_scripts"
-  }
+  "gemini_api_url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
+  "gemini_api_key": "AIzaSyBpfa_R8VvHMisqsbuo6NoKnNc5-OXn63s",
+  "source_xml_path": "https://raw.githubusercontent.com/Vanam-Srija/CPI_Project/main/iflows/EDI_850_TO_IDOC_1809_ORDERS.iflw",
+  "target_docx_path": "output_doc.docx",
+  "groovy_scripts_folder": "C:\\Users\\280407\\Downloads\\EDI_850_SRI\\groovy_scripts",
+
+  "github_repo": "Vanam-Srija/my-doc-repo",    // owner/repo where you want to push the generated doc
+  "github_branch": "main",
+  "github_token": "process.env.GITHUB_TOKEN",  // or leave blank to skip push
+  "repo_target_path": "docs"  // folder in the repo to place the doc (will create docs/<docname>.docx)
+}
+
