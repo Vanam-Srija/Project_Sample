@@ -28,7 +28,7 @@ jobs:
 
       - name: 🧠 Generate iFlow Technical Document
         run: |
-          python generate_iflow_doc.py
+          python Dynamic_generate_iflow_spec_using_ai.py
 
       - name: 🪶 Commit and push generated document
         env:
