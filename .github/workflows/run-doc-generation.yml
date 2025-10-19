@@ -61,7 +61,7 @@ jobs:
             git commit -m "Add/Update generated iFlow documentation" || echo "No changes to commit"
             
             # Use token to push via HTTPS
-            git push https://x-access-token:${PYTHON_REPO_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:main
+            git push https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:main
           else
             echo "No doc file found to push."
           fi
