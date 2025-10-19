@@ -707,7 +707,7 @@ def generate_iflow_spec():
 
     # Save to current working directory first
     local_output_path = os.path.abspath(os.path.basename(DOCX_PATH_MOD))
-    doc.save(local_output_path)
+    doc.save(iFlow_Documentation.docx)
     print(f"✅ Document generated and saved locally at: {local_output_path}")
 
     # Attempt to upload to GitHub if token + repo are provided
