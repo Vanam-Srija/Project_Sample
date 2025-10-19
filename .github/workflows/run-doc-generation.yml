@@ -27,24 +27,40 @@ jobs:
           pip install -r requirements.txt
           pip install pygraphviz networkx matplotlib python-docx
 
+      # Run your Python script (should generate iFlow_Documentation.docx in repo root)
       - name: Run iFlow Documentation Script
         run: python Dynamic_generate_iflow_spec_using_ai.py
+
+      # List files to confirm .docx exists (debug helper)
+      - name: List generated files
+        run: ls -R
+
+      # Upload generated .docx as workflow artifact (for download visibility)
       - name: Upload generated document
         uses: actions/upload-artifact@v4
         with:
           name: iFlow-Documentation
           path: ./*.docx
 
+      # Commit and push generated doc back to repo safely
       - name: Commit and push generated document
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Add only new or updated docs
-          git add ./*.docx || echo "No .docx files found"
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
+          # Check if .docx file exists
+          if ls ./*.docx 1> /dev/null 2>&1; then
+            echo "Found .docx file(s), preparing to commit..."
+            git add ./*.docx
+
+            # Commit only if there are changes
+            if git diff --cached --quiet; then
+              echo "No changes to commit."
+            else
+              git commit -m "Auto-generated iFlow documentation"
+              git push
+              echo "Documentation committed and pushed successfully."
+            fi
           else
-            git commit -m "Auto-generated iFlow documentation"
-            git push
-          fi  
+            echo "No .docx files found to commit."
+          fi
