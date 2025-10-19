@@ -7,7 +7,7 @@
 
   "github_repo": "Vanam-Srija/my-doc-repo",    // owner/repo where you want to push the generated doc
   "github_branch": "main",
-  "github_token": "process.env.GITHUB_TOKEN",  // or leave blank to skip push
-  "repo_target_path": "docs"  // folder in the repo to place the doc (will create docs/<docname>.docx)
+  "github_token": "process.env.PYTHON_REPO_TOKEN",  // or leave blank to skip push
+  "repo_target_path": "output_docs"  // folder in the repo to place the doc (will create docs/<docname>.docx)
 }
 
