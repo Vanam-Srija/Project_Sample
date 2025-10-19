@@ -957,12 +957,15 @@ def generate_iflow_spec():
     else:
         add_paragraph(doc, "No additional appendix info found in XML.")
 
-    # Create an output directory (so GitHub Actions can easily find the file)
-    # Ensure file has a proper .docx extension
-   # Python script
-    DOCX_PATH = "output.docx"
-    doc.save(DOCX_PATH)
-    print(f"Downloaded file saved locally as: {DOCX_PATH}")
+
+
+    import sys
+
+    # Get filename from CLI arg or fallback
+    filename = sys.argv[1] if len(sys.argv) > 1 else "iFlow_Documentation.docx"
+    document = Document()
+    document.add_paragraph("Generated iFlow documentation content here...")
+    document.save(filename)
 
 if __name__ == "__main__":
     generate_iflow_spec()
