@@ -1,7 +1,7 @@
 {
   "gemini_api_url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
   "gemini_api_key": "AIzaSyBpfa_R8VvHMisqsbuo6NoKnNc5-OXn63s",
-  "source_xml_path": "https://raw.githubusercontent.com/Vanam-Srija/CPI_Project/main/iflows/EDI_850_TO_IDOC_1809_ORDERS.iflw",
+  "source_xml_path": "https://raw.githubusercontent.com/Vanam-Srija/Sample1/main/iflows/EDI_850_TO_IDOC_1809_ORDERS.iflw",
   "target_docx_path": "https://raw.githubusercontent.com/Vanam-Srija/Git_Push_CI-CD/output_docs/output.docx",
   "groovy_scripts_folder": "C:\\Users\\280407\\Downloads\\EDI_850_SRI\\groovy_scripts",
   "github_repo": "Vanam-Srija/my-doc-repo",
