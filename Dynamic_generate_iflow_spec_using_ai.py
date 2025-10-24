@@ -957,19 +957,8 @@ def generate_iflow_spec():
     else:
         add_paragraph(doc, "No additional appendix info found in XML.")
 
-
-    import sys
-
-    # Get the output path from the workflow or use default
-    output_file = sys.argv[1] if len(sys.argv) > 1 else "output_docs/iFlow_Documentation.docx"
-
-# Ensure folder exists
-    os.makedirs(os.path.dirname(output_file), exist_ok=True)
-
-# Generate simple docx
-    doc = Document()
-    doc.add_paragraph("Auto-generated iFlow documentation.")
-    doc.save(output_file)
+    DOCX_PATH = "output.docx"
+    doc.save(DOCX_PATH)
 
 if __name__ == "__main__":
     generate_iflow_spec()
