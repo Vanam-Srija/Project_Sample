@@ -28,18 +28,17 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install urllib3 openai requests pygraphviz python-docx || true
 
-      # Create consistent output folder
       - name: 🕒 Prepare output path
         id: prep
         run: |
-          mkdir -p sample_doc
-          echo "DOC_FILE=sample_doc/iFlow_Documentation_$(date +'%Y-%m-%d_%H-%M-%S').docx" >> $GITHUB_ENV
+          mkdir -p output_docs
+          echo "DOC_FILE=output_docs/iFlow_Documentation_$(date +'%Y-%m-%d_%H-%M-%S').docx" >> $GITHUB_ENV
 
       - name: 🧠 Generate iFlow Technical Document
         run: python Dynamic_generate_iflow_spec_using_ai.py "$DOC_FILE"
 
       - name: 📁 Verify generated files
-        run: ls -l *.docx || echo "⚠️ No DOCX file found"
+        run: ls -l output_docs || echo "⚠️ No DOCX file found in output_docs/"
 
       - name: ⚙️ Configure Git
         run: |
@@ -50,16 +49,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PYTHON_REPO_TOKEN }}
         run: |
-          if ls ./*.docx 1> /dev/null 2>&1; then
+          if ls output_docs/*.docx 1> /dev/null 2>&1; then
             echo "📝 Found DOCX files to commit..."
-            git add ./*.docx
+            git add output_docs/*.docx
 
             if git diff --cached --quiet; then
               echo "No new documents to commit."
             else
               git commit -m "Auto-generated iFlow documentation - $(date +'%Y-%m-%d %H:%M:%S')"
               git push https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:main
-              echo "✅ Successfully pushed new documents to sample_doc/."
+              echo "✅ Successfully pushed new documents to output_docs/."
             fi
           else
             echo "⚠️ No DOCX files found to push."
