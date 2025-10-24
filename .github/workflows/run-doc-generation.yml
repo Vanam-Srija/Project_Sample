@@ -39,7 +39,7 @@ jobs:
         run: python Dynamic_generate_iflow_spec_using_ai.py "$DOC_FILE"
 
       - name: 📁 Verify generated files
-        run: ls -l output_docs/*.docx || echo "⚠️ No DOCX file found"
+        run: ls -l *.docx || echo "⚠️ No DOCX file found"
 
       - name: ⚙️ Configure Git
         run: |
@@ -50,9 +50,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PYTHON_REPO_TOKEN }}
         run: |
-          if ls output_docs/*.docx 1> /dev/null 2>&1; then
+          if ls ./*.docx 1> /dev/null 2>&1; then
             echo "📝 Found DOCX files to commit..."
-            git add output_docs/*.docx
+            git add ./*.docx
 
             if git diff --cached --quiet; then
               echo "No new documents to commit."
