@@ -50,7 +50,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PYTHON_REPO_TOKEN }}
         run: |
-          if ls sample_doc/*.docx 1> /dev/null 2>&1; then
+          if ls output_docs/*.docx 1> /dev/null 2>&1; then
             echo "📝 Found DOCX files to commit..."
             git add output_docs/*.docx
 
