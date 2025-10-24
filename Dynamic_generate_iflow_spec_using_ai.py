@@ -8,6 +8,7 @@ from datetime import datetime
 import requests
 import matplotlib.pyplot as plt
 import networkx as nx
+from datetime import datetime
 import os
 
 from docx.shared import Pt
@@ -957,8 +958,11 @@ def generate_iflow_spec():
     else:
         add_paragraph(doc, "No additional appendix info found in XML.")
 
-    DOCX_PATH = "output.docx"
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    DOCX_PATH = f"output_{timestamp}.docx"
+
     doc.save(DOCX_PATH)
+    print(f"✅ Document saved as: {DOCX_PATH}")
 
 if __name__ == "__main__":
     generate_iflow_spec()
