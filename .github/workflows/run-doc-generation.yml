@@ -39,7 +39,7 @@ jobs:
         run: python Dynamic_generate_iflow_spec_using_ai.py "$DOC_FILE"
 
       - name: 📁 Verify generated files
-        run: ls -l sample_doc/*.docx || echo "⚠️ No DOCX file found"
+        run: ls -l output_docs/*.docx || echo "⚠️ No DOCX file found"
 
       - name: ⚙️ Configure Git
         run: |
