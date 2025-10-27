@@ -958,8 +958,10 @@ def generate_iflow_spec():
     else:
         add_paragraph(doc, "No additional appendix info found in XML.")
 
+    os.makedirs("output_docs", exist_ok=True)
+
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    DOCX_PATH = f"output_{timestamp}.docx"
+    DOCX_PATH = os.path.join("output_docs", f"iFlow_Documentation_{timestamp}.docx")
 
     doc.save(DOCX_PATH)
     print(f"✅ Document saved as: {DOCX_PATH}")
